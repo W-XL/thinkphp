@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,6 +9,13 @@
 		<link rel="stylesheet" href="//cdn.tp.cn/index/plugins/layui/css/layui.css" media="all" />
 		<link rel="stylesheet" href="//cdn.tp.cn/index/css/login.css" />
 	</head>
+	<style>
+		.session{
+			text-align: center;
+			color: red;
+			margin-bottom: 10px;
+		}
+	</style>
 
 	<body class="beg-login-bg">
 		<div class="beg-login-box">
@@ -17,12 +23,14 @@
 				<h1>后台登录</h1>
 			</header>
 			<div class="beg-login-main">
-				<form action="{:url('Index/login')}" class="layui-form" method="post">
-					<!--<input name="__RequestVerificationToken" type="hidden" value="" />-->
+				<form action="{:url('Index/do_login')}" class="layui-form" method="post">
+					<div class="session">
+						<label>{$Request.session.login_error_msg}</label>
+					</div>
 					<div class="layui-form-item">
 						<label class="beg-login-icon">
                         <i class="layui-icon">&#xe612;</i>
-                    </label>
+                    	</label>
 						<input type="text" name="user_name" lay-verify="userName" autocomplete="off" placeholder="这里输入登录名" class="layui-input" >
 					</div>
 					<div class="layui-form-item">
@@ -45,9 +53,6 @@
 					</div>
 				</form>
 			</div>
-			<footer>
-				<p>Beginner © www.zhengjinfan.cn</p>
-			</footer>
 		</div>
 		<script type="text/javascript" src="//cdn.tp.cn/index/plugins/layui/layui.js"></script>
 		<script>
@@ -55,12 +60,6 @@
 				var layer = layui.layer,
 					$ = layui.jquery,
 					form = layui.form();
-					
-//				form.on('submit(login)',function(data){
-//
-//					location.href='index.html';
-//					return false;
-//				});
 			});
 		</script>
 	</body>

@@ -62,7 +62,7 @@ return [
     // 默认控制器名
     'default_controller'     => 'Index',
     // 默认操作名
-    'default_action'         => 'index',
+    'default_action'         => 'login',
     // 默认验证器
     'default_validate'       => '',
     // 默认的空控制器名
@@ -185,16 +185,6 @@ return [
     // | 缓存设置
     // +----------------------------------------------------------------------
 
-//    'cache'                  => [                     //单个缓存类型
-//        // 驱动方式
-//        'type'   => 'File',
-//        // 缓存保存目录
-//        'path'   => CACHE_PATH,
-//        // 缓存前缀
-//        'prefix' => 'think',
-//        // 缓存有效期 0表示永久缓存
-//        'expire' => 0,
-//    ],
 
     'cache'                  => [
         // 缓存配置为复合类型

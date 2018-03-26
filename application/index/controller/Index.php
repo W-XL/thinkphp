@@ -15,19 +15,26 @@ class Index extends Controller{
     }
 
     public function index(){
-        return $this->fetch('/login');
-
+        if(Session::get('usr_id')){
+            return $this->fetch('/index');
+        }else{
+            header("location:login");
+        }
     }
 
     public function login(){
+        return $this->fetch('/login');
+    }
+
+    public function do_login(){
         $params = $_POST;
         if(!$params['user_name'] || !$params['password']){
             $this->error("缺少必填项");
         }
         if($this->user_pwd_check($params)){
-
+            header("location:index");
         }else{
-            header("location:login.php?act=login");
+            header("location:login");
         }
     }
 
@@ -36,20 +43,35 @@ class Index extends Controller{
         $account = $params['user_name'];
         $password = $params['password'];
         $md5_pwd = md5($password);
-
         $user_info = $this->DAO->get_admins($account);
-        if (strtolower($md5_pwd) != strtolower($user_info['usr_pwd'])) {
-            if ($user_info) {
-                $_SESSION['login_error_msg'] = "密码错误，请重新输入";
-//                $this->DAO->do_login_log($account, $password, '密码错误', $this->client_ip(), $_SERVER['HTTP_USER_AGENT'],$user_info['id']);
+        if(strtolower($md5_pwd) != strtolower($user_info['usr_pwd'])){
+            if($user_info){
+                Session::set('login_error_msg','密码错误，请重新输入');
+                $this->DAO->do_login_log($account, $password, '密码错误', $this->request->ip(), $user_info['id']);
                 return false;
-            } else{
-                $_SESSION['login_error_msg'] = "用户名不存在，请重新输入";
-//                $this->DAO->do_login_log($account, $password, '用户名错误', $this->client_ip(), $_SERVER['HTTP_USER_AGENT']);
+            }else{
+                Session::set('login_error_msg','用户名不存在，请重新输入');
+                $this->DAO->do_login_log($account, $password, '用户名错误', $this->request->ip());
                 return false;
             }
+        }else{
+            $this->DAO->do_login_log($account, $password, '登录成功', $this->request->ip(),$user_info['id']);
+            Session::set('usr_id',$user_info['id']);
+            Session::set('group_id',$user_info['group_id']);
+            Session::delete('login_error_msg');
+            return true;
         }
 
+    }
+
+    public function do_logout(){
+        Session::delete('usr_id');
+        Session::delete('group_id');
+        header("location:login");
+    }
+
+    public function main(){
+        return $this->fetch('/main');
     }
 
 }
