@@ -18,7 +18,7 @@ class Account extends Controller{
 //        }
 
         $account_list = $accountDao->get_account_list();
-        //将分页放回的数据集对象转换成数组
+        //将分页返回的数据集对象转换成数组
         $account = $account_list->all();
         foreach($account as $key=>$data){
             if(!empty($data['p1'])){
