@@ -269,4 +269,5 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
+//    error_reporting(E_ERROR | E_PARSE )
 ];

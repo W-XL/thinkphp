@@ -1,0 +1,89 @@
+<div class="J_iframe" data-id="{:url('Account/listView')}">
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <button  type="button" class="btn btn-primary"  data-action='modal' href='{:url("Account/add_view")}' >新建用户</button>
+                    </div>
+                    <!--<div class="col-md-12 ibox-content">-->
+                        <!--<div class=" col-md-2">-->
+                            <!--<input type="text" id="user_account" class="form-control" value="" placeholder="请输入用户账号">-->
+                        <!--</div>-->
+                        <!--<button class="btn btn-default m-b-20" href="#;" onclick="search();"><i class="fa fa-search m-r-5"></i>搜索</button>-->
+                        <!--<button class="btn btn-default m-b-20" href="#;" onclick="reloadsearch();"> <i class="fa fa-undo"></i>清空搜索</button>-->
+                    <!--</div>-->
+
+                    <div class="ibox-content">
+                        <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="20">
+                            <thead>
+                            <tr>
+                                <th data-toggle="true">用户ID</th>
+                                <th>账号</th>
+                                <th>姓名(公会名)</th>
+                                <th>上级后台</th>
+                                <th>QQ号</th>
+                                <th>代码</th>
+                                <th>最后登录IP</th>
+                                <th>最后登录时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {volist name="list" id="vo"}
+                            <tr>
+                                <th scope="row">{$vo.id}</th>
+                                <td>{$vo.account}</td>
+                                <td>{$vo.real_name}</td>
+                                <td>
+                                    {if $vo.group_id eq 10 and $vo.p1 != '0' and $vo.p2 != '0'}
+                                    普通后台<br>
+                                    上级会长：{$vo.p1_name}<br>
+                                    顶级会长：{$vo.p2_name}
+                                    {elseif $vo.group_id eq 10 and $vo.p1 != '0'}
+                                    高级后台<br>
+                                    上级会长：{$vo.p1_name}
+                                    {elseif $vo.group_id eq 10}
+                                    超级后台
+                                    {/if}
+                                </td>
+                                <td>{$vo.qq}</td>
+                                <td>{$vo.user_code}</td>
+                                <td>{$vo.last_ip}</td>
+                                <td>{$vo.last_login|date='Y-m-d H:i:s',###}</td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            {/volist}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="10">
+                                    <ul class="pagination " id="page">{$pages}</ul>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+    <script>
+        function search() {
+            var user_account = $("#user_account").val();
+            var url = "/account/index?user_name="+user_account;
+            main_data_load(url);
+            return false;
+        }
+        function reloadsearch(){
+            var url = "{:url('Account/index')}";
+            main_data_load(url);
+        }
+    </script>
+</div>
