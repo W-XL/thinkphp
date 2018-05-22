@@ -5,4 +5,5 @@
 $().ready(function(){
     // validate the comment form when it is submitted
     $("#myForm").validate();
-})
+    $("#myform").validate();
+});

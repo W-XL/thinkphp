@@ -48,6 +48,33 @@ class Menu extends Controller{
         return succeed_msg();
     }
 
+    public function edit_view(){
+        $id = Request::instance()->param('id');
+        $menu_dao = Loader::model('MenuDao');
+        $menu = $menu_dao->get_menu($id);
+        if(!$menu){
+            error_msg('查无此菜单');
+        }
+        if($menu['pid'] == 0){
+            $menu['pp_id'] = 0;
+        }
+        $parents = $menu_dao->get_cate_menu($menu['pp_id']);
+        if($menu['pid']==0){
+            $parents[] = array("id"=>0, "name"=>"=顶级菜单=");
+        }
+        $this->assign("menu", $menu);
+        $this->assign("parents", $parents);
+        return view('menu_edit');
+    }
 
+    public function do_edit(){
+        $params = Request::instance()->param();
+        if(!isset($params['pid']) || !$params['name'] || !isset($params['status'])){
+            return error_msg('缺少必填项');
+        }
+        $menu_dao = Loader::model('MenuDao');
+        $menu_dao->update_menu($params);
+        return succeed_msg();
+    }
 
 }

@@ -8,13 +8,13 @@
                     <div class="ibox-title">
                         <button  type="button" class="btn btn-primary"  data-action='modal' href='{:url("Account/add_view")}' >新建用户</button>
                     </div>
-                    <!--<div class="col-md-12 ibox-content">-->
-                        <!--<div class=" col-md-2">-->
-                            <!--<input type="text" id="user_account" class="form-control" value="" placeholder="请输入用户账号">-->
-                        <!--</div>-->
-                        <!--<button class="btn btn-default m-b-20" href="#;" onclick="search();"><i class="fa fa-search m-r-5"></i>搜索</button>-->
-                        <!--<button class="btn btn-default m-b-20" href="#;" onclick="reloadsearch();"> <i class="fa fa-undo"></i>清空搜索</button>-->
-                    <!--</div>-->
+                    <div class="col-md-12 ibox-content">
+                        <div class=" col-md-2">
+                            <input type="text" id="user_account" class="form-control" value="{$params.user_account}" placeholder="请输入用户账号">
+                        </div>
+                        <button class="btn btn-primary m-b-20" href="#;" onclick="search();"><i class="fa fa-search m-r-5"></i>搜索</button>
+                        <button class="btn btn-primary m-b-20" href="#;" onclick="reloadsearch();"> <i class="fa fa-undo"></i>清空搜索</button>
+                    </div>
 
                     <div class="ibox-content">
                         <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="20">
@@ -54,7 +54,8 @@
                                 <td>{$vo.last_ip}</td>
                                 <td>{$vo.last_login|date='Y-m-d H:i:s',###}</td>
                                 <td>
-
+                                    <button data-action="modal" class="btn btn-primary m-b-10" href="{:url('Account/edit_view',['id'=>$vo.id])}">编辑</button>
+                                    <button data-action="modal" class="btn btn-primary m-b-10" href="{:url('Account/password',['id'=>$vo.id])}">修改密码</button>
                                 </td>
                             </tr>
                             {/volist}
@@ -74,15 +75,16 @@
         </div>
     </div>
 </body>
+
     <script>
         function search() {
             var user_account = $("#user_account").val();
-            var url = "/account/index?user_name="+user_account;
+            var url ="{:url('Account/listView')}?user_account="+user_account;
             main_data_load(url);
             return false;
         }
         function reloadsearch(){
-            var url = "{:url('Account/index')}";
+            var url = "{:url('Account/listView')}";
             main_data_load(url);
         }
     </script>

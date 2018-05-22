@@ -29,5 +29,12 @@ class MenuDao extends Model{
             ->insert($data);
     }
 
+    public function update_menu($params){
+        $data = ['pid'=>$params['pid'],'name'=>$params['name'],'url'=>$params['url'],'status'=>$params['status']];
+        Db::table('admin_menus')
+            ->where('id',$params['id'])
+            ->update($data);
+    }
+
 
 }
